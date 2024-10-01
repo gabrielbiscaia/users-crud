@@ -1,0 +1,44 @@
+# Dependências
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Diretórios de build
+dist/
+build/
+
+# Caches
+.cache/
+.npm/
+.eslintcache
+.parcel-cache
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE/editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de teste e cobertura
+coverage/
+
+# Arquivos temporários
+tmp/
+temp/
+
+# TypeScript
+*.tsbuildinfo
