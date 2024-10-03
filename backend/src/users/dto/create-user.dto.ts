@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -9,7 +9,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   sexo: string;
 
-  @IsDate()
+  @IsDateString()
   dataNascimento: Date;
 
   @IsNumber()
