@@ -6,6 +6,7 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -46,16 +47,25 @@ export class UsersService {
     }
   }
 
-  async findWithQuery(page: number = 1, limit: number = 10) {
+  async findWithQuery(page: number = 1, limit: number = 10, query?: string) {
     try {
       const skip = (page - 1) * limit;
+      let where: Prisma.UserWhereInput = {};
+
+      if (query) {
+        where = {
+          OR: [{ nome: { contains: query, mode: 'insensitive' } }],
+        };
+      }
+
       const [users, total] = await Promise.all([
         this.prisma.user.findMany({
+          where,
           take: limit,
           skip: skip,
           orderBy: { id: 'asc' },
         }),
-        this.prisma.user.count(),
+        this.prisma.user.count({ where }),
       ]);
 
       const totalPages = Math.ceil(total / limit);

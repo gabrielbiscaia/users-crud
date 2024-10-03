@@ -3,10 +3,12 @@ import {
   Get,
   Post,
   Body,
+  Put,
   Param,
   Delete,
-  Put,
   Query,
+  ParseIntPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,30 +24,32 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('q') query?: string,
+  ) {
+    if (page || limit || query) {
+      return this.usersService.findWithQuery(page, limit, query);
+    }
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
-  }
-
-  @Get(':index')
-  findWithQuery(@Query('index') index: number) {
-    if (!index || index < 0 || isNaN(index) || index == undefined) {
-      throw new Error('index is required');
-    }
-    return this.usersService.findWithQuery(index);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id);
   }
 }
