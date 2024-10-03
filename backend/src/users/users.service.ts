@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -21,6 +21,19 @@ export class UsersService {
     return await this.prisma.user.findUnique({
       where: { id },
     });
+  }
+
+  async findWithQuery(index: number) {
+    try {
+      const selectedUsers = index * 10;
+      const quantityUsersPerPage = 10;
+      return await this.prisma.user.findMany({
+        take: quantityUsersPerPage,
+        skip: selectedUsers,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
