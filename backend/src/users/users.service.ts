@@ -8,19 +8,35 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    return await this.prisma.user.create({
-      data: createUserDto,
-    });
+    try {
+      return await this.prisma.user.create({
+        data: createUserDto,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    try {
+      return await this.prisma.user.findMany();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async findOne(id: number) {
-    return await this.prisma.user.findUnique({
-      where: { id },
-    });
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
+      if (!user) {
+        throw new Error('User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async findWithQuery(index: number) {
@@ -37,15 +53,35 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return await this.prisma.user.update({
-      where: { id },
-      data: updateUserDto,
-    });
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
+      if (!user) {
+        throw new Error('User not found');
+      }
+      return await this.prisma.user.update({
+        where: { id },
+        data: updateUserDto,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async remove(id: number) {
-    return await this.prisma.user.delete({
-      where: { id },
-    });
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
+      if (!user) {
+        throw new Error('User not found');
+      }
+      return await this.prisma.user.delete({
+        where: { id },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }
