@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -13,7 +17,7 @@ export class UsersService {
         data: createUserDto,
       });
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      throw new InternalServerErrorException('Failed to create user', error);
     }
   }
 
@@ -21,7 +25,7 @@ export class UsersService {
     try {
       return await this.prisma.user.findMany();
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      throw new InternalServerErrorException('Failed to fetch users', error);
     }
   }
 
@@ -31,24 +35,51 @@ export class UsersService {
         where: { id },
       });
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundException(`User with ID ${id} not found`);
       }
       return user;
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to fetch user', error);
     }
   }
 
-  async findWithQuery(index: number) {
+  async findWithQuery(page: number = 1, limit: number = 10) {
     try {
-      const selectedUsers = index * 10;
-      const quantityUsersPerPage = 10;
-      return await this.prisma.user.findMany({
-        take: quantityUsersPerPage,
-        skip: selectedUsers,
-      });
+      const skip = (page - 1) * limit;
+      const [users, total] = await Promise.all([
+        this.prisma.user.findMany({
+          take: limit,
+          skip: skip,
+          orderBy: { id: 'asc' },
+        }),
+        this.prisma.user.count(),
+      ]);
+
+      const totalPages = Math.ceil(total / limit);
+
+      if (page > totalPages) {
+        throw new NotFoundException(
+          `Page ${page} not found. Total pages: ${totalPages}`,
+        );
+      }
+
+      return {
+        data: users,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to fetch users', error);
     }
   }
 
@@ -58,14 +89,17 @@ export class UsersService {
         where: { id },
       });
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundException(`User with ID ${id} not found`);
       }
       return await this.prisma.user.update({
         where: { id },
         data: updateUserDto,
       });
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to update user', error);
     }
   }
 
@@ -75,13 +109,16 @@ export class UsersService {
         where: { id },
       });
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundException(`User with ID ${id} not found`);
       }
       return await this.prisma.user.delete({
         where: { id },
       });
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to delete user', error);
     }
   }
 }
