@@ -1,16 +1,10 @@
-import Container from "@/components/Container";
 import Form from "@/components/Form";
-import List from "@/components/List";
+// import List from "@/components/List";
 
 export default function Home() {
   return (
     <main className="bg-[#141414] min-h-screen w-full">
-      <Container>
-        <>
-          <Form />
-          <List />
-        </>
-      </Container>
+      <Form />
     </main>
   );
 }
