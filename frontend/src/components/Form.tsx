@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Container from "./Container";
-
-import sexes from "@/constants/sexes";
 
 import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import useCreateUser from "@/hooks/useCreateUser";
+import sexes from "@/constants/sexes";
 import { CalendarDate } from "@internationalized/date";
+
+import Container from "./Container";
 import {
   DatePicker,
   Input,
@@ -29,16 +31,24 @@ const createUserSchema = z.object({
 type CreateUserSchema = z.infer<typeof createUserSchema>;
 
 function Form() {
+  const { createUser, isLoading } = useCreateUser();
+
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CreateUserSchema>({
     resolver: zodResolver(createUserSchema),
   });
 
-  function handleCreateUser(data: CreateUserSchema) {
-    console.log(data);
+  async function handleCreateUser(data: CreateUserSchema) {
+    try {
+      await createUser(data);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -120,8 +130,8 @@ function Form() {
             )}
           />
         </div>
-        <Button type="submit" className="w-full">
-          Cadastrar
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Cadastrando..." : "Cadastrar"}
         </Button>
       </form>
     </Container>
