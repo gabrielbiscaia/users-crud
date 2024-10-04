@@ -1,15 +1,12 @@
 "use client";
 
 import React from "react";
-
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import useCreateUser from "@/hooks/useCreateUser";
 import sexes from "@/constants/sexes";
 import { CalendarDate } from "@internationalized/date";
-
 import Container from "./Container";
 import {
   DatePicker,
@@ -18,6 +15,8 @@ import {
   SelectItem,
   Button,
 } from "@nextui-org/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const createUserSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -47,12 +46,14 @@ function Form() {
       await createUser(data);
       reset();
     } catch (error) {
-      console.log(error);
+      toast.error("Erro ao cadastrar usuário. Por favor, tente novamente.");
+      throw error;
     }
   }
 
   return (
     <Container>
+      <ToastContainer position="top-right" autoClose={5000} />
       <h1 className="text-2xl font-bold mb-8">Cadastro de Usuário</h1>
       <form
         onSubmit={handleSubmit(handleCreateUser)}
