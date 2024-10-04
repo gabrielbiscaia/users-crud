@@ -33,9 +33,18 @@ export default function App() {
 
   const handleUpdateUser = async (user: User) => {
     try {
-      const updatedUser = await updateUser(user);
+      const updatedUserData = await updateUser({
+        id: user.id,
+        nome: user.nome,
+        idade: user.idade,
+        sexo: user.sexo,
+        dataNascimento: user.dataNascimento,
+      });
+
       setUsers((prevUsers) =>
-        prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u)),
+        prevUsers.map((u) =>
+          u.id === user.id ? { ...u, ...updatedUserData, id: u.id } : u,
+        ),
       );
       setSelectedUser(null);
     } catch (error) {
