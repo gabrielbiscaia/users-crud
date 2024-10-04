@@ -57,7 +57,7 @@ function Form() {
       <h1 className="text-2xl font-bold mb-8">Cadastro de Usuário</h1>
       <form
         onSubmit={handleSubmit(handleCreateUser)}
-        className="flex flex-col gap-2 w-2/3"
+        className="flex flex-col gap-2 w-full"
       >
         <Controller
           name="nome"

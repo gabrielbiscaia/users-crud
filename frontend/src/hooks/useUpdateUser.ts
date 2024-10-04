@@ -3,32 +3,30 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 interface UserInput {
-  nome?: string;
-  sexo?: string;
-  dataNascimento?: Date;
-  idade?: number;
+  nome: string;
+  sexo: string;
+  dataNascimento: Date;
+  idade: number;
 }
 
 interface UserPayload {
-  nome?: string;
-  sexo?: string;
-  dataNascimento?: string;
-  idade?: number;
+  nome: string;
+  sexo: string;
+  dataNascimento: string;
+  idade: number;
 }
 
 const useUpdateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const updateUser = async (userId: string, userData: UserInput) => {
+  const updateUser = async (userId: number, userData: UserInput) => {
     setIsLoading(true);
     try {
       const formattedData: UserPayload = {
-        ...(userData.nome && { nome: userData.nome }),
-        ...(userData.sexo && { sexo: userData.sexo.toLowerCase() }),
-        ...(userData.dataNascimento && {
-          dataNascimento: userData.dataNascimento.toISOString(),
-        }),
-        ...(userData.idade && { idade: userData.idade }),
+        nome: userData.nome,
+        sexo: userData.sexo.toLowerCase(),
+        dataNascimento: userData.dataNascimento.toISOString(),
+        idade: userData.idade,
       };
 
       const response = await axios.put(

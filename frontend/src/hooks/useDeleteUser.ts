@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const useDeleteUser = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const deleteUser = async (userId: string) => {
+  const deleteUser = async (userId: number) => {
     setIsLoading(true);
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`);
