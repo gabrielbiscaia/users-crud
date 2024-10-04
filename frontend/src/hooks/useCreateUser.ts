@@ -37,7 +37,6 @@ const useCreateUser = () => {
       toast.success("Usuário criado com sucesso!");
       return response.data;
     } catch (error) {
-      toast.error("Erro ao criar usuário");
       if (axios.isAxiosError(error) && error.response) {
         toast.error(
           `Erro ao criar usuário: ${error.response.data.message || "Ocorreu um erro no servidor"}`,
