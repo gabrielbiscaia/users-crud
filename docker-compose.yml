@@ -12,27 +12,27 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-#   backend:
-#     build:
-#       context: ./backend
-#     depends_on:
-#       - postgres
-#     environment:
-#       - DATABASE_URL=${DATABASE_URL}
-#     ports:
-#       - "3000:3000"
-#     env_file:
-#       - .env
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
 
-#   frontend:
-#     build:
-#       context: ./frontend
-#     depends_on:
-#       - backend
-#     ports:
-#       - "8080:80"
-#     env_file:
-#       - .env
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:8080"
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
