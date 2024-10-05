@@ -53,7 +53,7 @@ const useGetUsers = (fetchCallback: () => void) => {
 
   useEffect(() => {
     fetchUsers();
-    fetchCallback(); // Chama a função de callback após buscar os usuários
+    fetchCallback();
   }, [fetchCallback]);
 
   return { users, isLoading, error, meta };
