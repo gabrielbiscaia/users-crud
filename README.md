@@ -122,14 +122,14 @@ Em seguida, execute a aplicação com o comando:
 npm run dev
 ```
 
-## Portas
+## 🚪 Portas
 Portas da Aplicação
 Quando a aplicação estiver em execução, as portas referenciadas nas variáveis de ambiente na raiz do projeto (se estiver usando Docker), ou nos diretórios de serviço do frontend e backend, são:
-
+```
 PostgreSQL: 5432
 Backend: 3000
 Frontend: 8080
-
+```
 ## 📂 Estrutura do Projeto
 ```
 .
