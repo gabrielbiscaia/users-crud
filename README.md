@@ -2,7 +2,7 @@
 
 ![image](https://github.com/user-attachments/assets/6da0997a-7e96-4e45-bda2-441ca346b367)
 
-## Objetivo
+## 🎯 Objetivo
 O objetivo deste projeto era criar um CRUD que pudesse fazer operações REST (Create, Read, Update and Delete) de Usuários, estes que possum os seguintes atributos:
 ``` 
 nome: varchar
@@ -20,6 +20,30 @@ POST /users
 PUT /users/{id}
 DELETE /users/{id}
 ```
+## 🧰 Tecnologias
+### Container
+- Docker
+- Docker-Compose
+
+### Banco de Dados
+- PostgreSQL
+
+### Backend
+- Nest.js
+- TypeScript
+- Prisma
+
+### Frontend
+- Next.js
+- React
+- TypeScript
+- TailWind CSS
+- NextUI
+- zod
+- axios
+- react-hook-form
+- react-toastify
+
 ## ⚙️ Configurações 
 ### Configuração para rodar a aplicação com o Docker
 Para rodar o projeto utilizando Docker, será necessário criar um arquivo **.env** o qual irá armazenar as variaveis de ambiente do **docker-compose**, o arquivo deve conter as seguintes variáveis de ambiente:
