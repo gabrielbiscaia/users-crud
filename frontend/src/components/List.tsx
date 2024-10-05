@@ -27,7 +27,7 @@ interface User {
   id: number;
   nome: string;
   sexo: string;
-  dataNascimento: string;
+  dataNascimento: Date | string;
   idade: number;
 }
 
