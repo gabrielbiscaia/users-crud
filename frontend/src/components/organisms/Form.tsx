@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserUpdate } from "@/contexts/UserUpdateContext";
 
 const createUserSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -31,6 +32,7 @@ type CreateUserSchema = z.infer<typeof createUserSchema>;
 
 function Form() {
   const { createUser, isLoading } = useCreateUser();
+  const { triggerUpdate } = useUserUpdate();
 
   const {
     control,
@@ -45,6 +47,7 @@ function Form() {
     try {
       await createUser(data);
       reset();
+      triggerUpdate();
     } catch (error) {
       toast.error("Erro ao cadastrar usuário. Por favor, tente novamente.");
       throw error;

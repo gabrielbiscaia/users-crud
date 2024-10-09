@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useGetUsers from "@/hooks/useGetUsers";
 import useDeleteUser from "@/hooks/useDeleteUser";
 import useUpdateUser from "@/hooks/useUpdateUser";
 import Container from "@/components/atoms/Container";
 import UserTable from "../atoms/UserTable";
 import EditUserModal from "../atoms/EditUserModal";
+import { useUserUpdate } from "@/contexts/UserUpdateContext";
 
 interface User {
   id: number;
@@ -23,6 +24,11 @@ const List: React.FC = () => {
   const { users, isLoading, error, meta, refetch } = useGetUsers();
   const { deleteUser, isLoading: isDeleting } = useDeleteUser();
   const { updateUser, isLoading: isUpdating } = useUpdateUser();
+  const { lastUpdate } = useUserUpdate();
+
+  useEffect(() => {
+    refetch();
+  }, [lastUpdate, refetch]);
 
   const handleDelete = async (userId: number) => {
     try {

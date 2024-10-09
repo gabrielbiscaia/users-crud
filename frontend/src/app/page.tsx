@@ -1,11 +1,14 @@
 import Form from "@/components/organisms/Form";
 import List from "@/components/organisms/List";
+import { UserUpdateProvider } from "@/contexts/UserUpdateContext";
 
 export default function Home() {
   return (
     <main className="bg-[#141414] min-h-screen w-full">
-      <Form />
-      <List />
+      <UserUpdateProvider>
+        <Form />
+        <List />
+      </UserUpdateProvider>
     </main>
   );
 }
