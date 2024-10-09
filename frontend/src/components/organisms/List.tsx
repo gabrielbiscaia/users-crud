@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import useGetUsers from "@/hooks/useGetUsers";
 import useDeleteUser from "@/hooks/useDeleteUser";
 import useUpdateUser from "@/hooks/useUpdateUser";
@@ -20,18 +20,14 @@ const List: React.FC = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const fetchUsers = useCallback(() => {
-    console.log("Fetching users...");
-  }, []);
-
-  const { users, isLoading, error, meta } = useGetUsers(fetchUsers);
+  const { users, isLoading, error, meta, refetch } = useGetUsers();
   const { deleteUser, isLoading: isDeleting } = useDeleteUser();
   const { updateUser, isLoading: isUpdating } = useUpdateUser();
 
   const handleDelete = async (userId: number) => {
     try {
       await deleteUser(userId);
-      fetchUsers();
+      refetch();
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);
     }
@@ -60,7 +56,7 @@ const List: React.FC = () => {
       };
       await updateUser(editingUser.id, updatedUser);
       setIsEditModalOpen(false);
-      fetchUsers();
+      refetch();
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
     }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import User from "../types/User";
@@ -13,13 +13,13 @@ interface ApiResponse {
   };
 }
 
-const useGetUsers = (fetchCallback: () => void) => {
+const useGetUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [meta, setMeta] = useState<ApiResponse["meta"] | null>(null);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -49,14 +49,13 @@ const useGetUsers = (fetchCallback: () => void) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchUsers();
-    fetchCallback();
-  }, [fetchCallback]);
+  }, [fetchUsers]);
 
-  return { users, isLoading, error, meta };
+  return { users, isLoading, error, meta, refetch: fetchUsers };
 };
 
 export default useGetUsers;
