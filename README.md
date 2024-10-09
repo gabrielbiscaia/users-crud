@@ -1,6 +1,7 @@
 # CRUD de Usuários
 
-![image](https://github.com/user-attachments/assets/6da0997a-7e96-4e45-bda2-441ca346b367)
+![image](https://github.com/user-attachments/assets/8a1e1e97-3d7f-4d08-af74-bae9ed86a4b0)
+
 
 ## 🎯 Objetivo
 O objetivo deste projeto era criar um CRUD que pudesse fazer operações REST (Create, Read, Update and Delete) de Usuários, estes que possum os seguintes atributos:
