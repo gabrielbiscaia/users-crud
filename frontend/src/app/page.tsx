@@ -1,5 +1,5 @@
-import Form from "@/components/Form";
-import List from "@/components/List";
+import Form from "@/components/organisms/Form";
+import List from "@/components/organisms/List";
 
 export default function Home() {
   return (
