@@ -30,6 +30,15 @@ Create a CRUD (Create, Read, Update and Delete) that could perform REST operatio
 - Docker
 - Docker-Compose
 
+## 📋 Requirements
+
+Before you begin, ensure you have the following installed on your local machine:
+
+- Node.js (v18 or later)
+- npm (comes with Node.js)
+- Docker and Docker Compose
+- Git
+
 ## ⚙️ Settings
 ### Configuration to run the application with Docker
 To run the project using Docker, you will need to create an **.env** file which will store the environment variables for **docker-compose**, the file should contain the following environment variables:
