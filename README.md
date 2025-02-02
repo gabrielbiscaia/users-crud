@@ -35,15 +35,15 @@ Create a CRUD (Create, Read, Update and Delete) that could perform REST operatio
 To run the project using Docker, you will need to create an **.env** file which will store the environment variables for **docker-compose**, the file should contain the following environment variables:
 ```
 # PostgreSQL
-POSTGRES_USER=POSTGRES_USER
-POSTGRES_PASSWORD=POSTGRES_PASSWORD
-POSTGRES_DB=POSTGRES_DB
+POSTGRES_USER='POSTGRES_USER'
+POSTGRES_PASSWORD='POSTGRES_PASSWORD'
+POSTGRES_DB='POSTGRES_DB'
 
 # Backend
-DATABASE_URL=DATABASE_URL
+DATABASE_URL='DATABASE_URL'
 
 # Frontend
-NEXT_API_URL=NEXT_API_URL
+NEXT_API_URL='NEXT_API_URL'
 ```
 
 ### Configuration to run the application individually
@@ -77,7 +77,7 @@ Inside the **backend** folder you need to create an **.env**
 ```
 Inside the **.env** we will have the following environment variables
 ```
-DATABASE_URL=DATABASE=URL
+DATABASE_URL='YOUR_DATABASE_URL'
 ```
 
 #### Frontend
@@ -89,7 +89,7 @@ Inside the **frontend** folder you need to create an **.env**
 ```
 Inside the **.env** we will have the following environment variables
 ```
-NEXT_API_URL=NEXT_API_URL
+NEXT_API_URL=http://localhost:3000
 ```
 ## ▶️ Running the Application
 ### Using Docker
