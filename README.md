@@ -1,38 +1,11 @@
-# CRUD de Usuários
+# User CRUD
 
 ![image](https://github.com/user-attachments/assets/8a1e1e97-3d7f-4d08-af74-bae9ed86a4b0)
 
+## 🎯 Objective
+Create a CRUD (Create, Read, Update and Delete) that could perform REST operations to manage users.
 
-## 🎯 Objetivo
-O objetivo deste projeto era criar um CRUD que pudesse fazer operações REST (Create, Read, Update and Delete) de Usuários, estes que possum os seguintes atributos:
-``` 
-nome: varchar
-sexo: char
-datanascimento: date
-idade: integer 
-```
-E tivesse como API Endpoints:
-
-```
-GET /users
-GET /users?
-GET /users/{id}
-POST /users
-PUT /users/{id}
-DELETE /users/{id}
-```
-## 🧰 Tecnologias
-### Container
-- Docker
-- Docker-Compose
-
-### Banco de Dados
-- PostgreSQL
-
-### Backend
-- Nest.js
-- TypeScript
-- Prisma
+## 🧰 Technologies
 
 ### Frontend
 - Next.js
@@ -45,9 +18,21 @@ DELETE /users/{id}
 - react-hook-form
 - react-toastify
 
-## ⚙️ Configurações 
-### Configuração para rodar a aplicação com o Docker
-Para rodar o projeto utilizando Docker, será necessário criar um arquivo **.env** o qual irá armazenar as variaveis de ambiente do **docker-compose**, o arquivo deve conter as seguintes variáveis de ambiente:
+### Backend
+- Nest.js
+- TypeScript
+- Prisma
+
+### Database
+- PostgreSQL
+
+### Container
+- Docker
+- Docker-Compose
+
+## ⚙️ Settings
+### Configuration to run the application with Docker
+To run the project using Docker, you will need to create an **.env** file which will store the environment variables for **docker-compose**, the file should contain the following environment variables:
 ```
 # PostgreSQL
 POSTGRES_USER=POSTGRES_USER
@@ -61,9 +46,9 @@ DATABASE_URL=DATABASE_URL
 NEXT_API_URL=NEXT_API_URL
 ```
 
-### Configuração para rodar a aplicação individualmente
+### Configuration to run the application individually
 #### Docker-Compose
-Dentro do arquivo **docker-compose.yml** será necessários deixar apenas a seguinte estrutura:
+Inside the **docker-compose.yml** file, you will need to leave only the following structure:
 ```
 services:
   postgres:
@@ -84,50 +69,50 @@ volumes:
 ```
 
 #### Backend
-Dentro da pasta **backend** é necessário criar um **.env**
+Inside the **backend** folder you need to create an **.env**
 ```
 .
 └── backend
    └── .env
 ```
-Dentro do **.env** teremos as seguintes variaveis de ambiente
+Inside the **.env** we will have the following environment variables
 ```
 DATABASE_URL=DATABASE=URL
 ```
 
 #### Frontend
-Dentro da pasta **frontend** é necessário criar um **.env**
+Inside the **frontend** folder you need to create an **.env**
 ```
 .
 └── frontend
    └── .env
 ```
-Dentro do **.env** teremos as seguintes variaveis de ambiente
+Inside the **.env** we will have the following environment variables
 ```
 NEXT_API_URL=NEXT_API_URL
 ```
-## ▶️ Rodar o Aplicativo
-### Usando o Docker
-Com o Docker instalado voce pode buildar e rodar o aplicativo usando o seguinte comando:
+## ▶️ Running the Application
+### Using Docker
+With Docker installed you can build and run the application using the following command:
 ```
 docker-compose up --build
 ```
-### Usando o terminal
+### Using the terminal
 #### Backend
 
-Para iniciar o backend no ambiente de desenvolvimento, você precisa instalar o Node e executar:
+To start the backend in the development environment, you need to install Node and run:
 
 ```
 npm install
 ```
 
-Em seguida, você deve executar as migrações do Prisma. Prisma é um ORM que ajuda a fazer consultas no banco de dados. Você pode executar as migrações no seu terminal com este comando:
+Then, you should run the Prisma migrations. Prisma is an ORM that helps make database queries. You can run the migrations in your terminal with this command:
 
 ```
-npx prisma migrate dev
+npx prisma db push
 ```
 
-Por fim, basta iniciar a aplicação:
+Finally, just start the application:
 
 ```
 npm run start:dev
@@ -135,27 +120,28 @@ npm run start:dev
 
 ### Frontend
 
-O frontend também pode ser executado via terminal. Para isso, você precisa navegar até o diretório do frontend e primeiro instalar as dependências:
+The frontend can also be run via terminal. To do this, you need to navigate to the frontend directory and first install the dependencies:
 
 ```
 npm install
 ```
 
-Em seguida, execute a aplicação com o comando:
+Then run the application with the command:
 
 ```
 npm run dev
 ```
 
-## 🚪 Portas
-Portas da Aplicação
-Quando a aplicação estiver em execução, as portas referenciadas nas variáveis de ambiente na raiz do projeto (se estiver usando Docker), ou nos diretórios de serviço do frontend e backend, são:
-```
-PostgreSQL: 5432
-Backend: 3000
-Frontend: 8080
-```
-## 📂 Estrutura do Projeto
+## 🚪 API Endpoints
+
+- GET /users
+- GET /users?
+- GET /users/{id}
+- POST /users
+- PUT /users/{id}
+- DELETE /users/{id}
+
+## 📂 Project Structure
 ```
 .
 ├── backend
@@ -164,23 +150,17 @@ Frontend: 8080
 │   │   └── *schema.prisma*
 │   ├── src
 │   │   ├── *main.ts*
-│   │   ├── database
-│   │   ├── integrations
-│   │   ├── utils
-│   │   ├── logistic-operator
-│   └── └── simulations
+│   │   ├── prisma
+│   └── └── users
 ├── frontend
 │   ├── Dockerfile
 │   ├── src
-│   │   ├── api
 │   │   ├── app
 │   │   │   └── *page.tsx*
 │   │   ├── components
-│   │   ├── hooks
 │   │   ├── constants
+│   │   ├── contexts
+│   │   ├── hooks
 │   └── └── types
 └── docker-compose.yml
 ```
-
-## 🔃 Versionamento
-Esse projeto utiliza o Git para controle de versão e o GitHub como repositório remoto.
